@@ -1,5 +1,6 @@
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
+import React, {ChangeEvent} from "react";
 
 type postDataType = {
     id: number
@@ -8,22 +9,35 @@ type postDataType = {
 }
 
 type postPropsType = {
-    post:Array<postDataType>
+    post: Array<postDataType>
+    addPost: () => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
 }
 
-const MyPosts = (props:postPropsType) => {
+const MyPosts = (props: postPropsType) => {
 
 
-    let postsElements =   props.post.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
+    let postsElements = props.post.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
+
+    const addPost = () => {
+        props.addPost()
+    }
+
+    let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.updateNewPostText(e.currentTarget.value)
+    }
+
     return (
         <div className={s.postsBlock}>
             My posts
             <div>
                 <div>
-                    <textarea></textarea>
+                    <textarea onChange={onPostChange}
+                              value={props.newPostText}/>
                 </div>
                 <div>
-                    <button>Add post</button>
+                    <button onClick={addPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>

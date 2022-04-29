@@ -1,15 +1,17 @@
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import post from "./MyPosts/Post/Post";
-import {postDataType} from "../../index";
+import {ProfilePageType} from "../../redux/state";
 
 type ProfilePropsType = {
-    post:Array<postDataType>
+    profilePage:ProfilePageType
+    addPost: () => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
 }
 const Profile = (props:ProfilePropsType) => {
     return <div>
         <ProfileInfo/>
-        <MyPosts post = {props.post}/>
+        <MyPosts post = {props.profilePage.post} addPost={props.addPost} newPostText={props.profilePage.newPostText} updateNewPostText={props.updateNewPostText}/>
     </div>
 }
 
